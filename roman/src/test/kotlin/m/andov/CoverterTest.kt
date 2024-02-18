@@ -4,6 +4,12 @@ import org.junit.jupiter.api.Test
 import m.andov.kroman.Converter
 
 class ConverterTest {
+
+    fun testRomanConversion(romanNumeral: String, expected: Int, message: String? = null) {
+        val converter = Converter(romanNumeral)
+        assertEquals(expected, converter.toInteger(), message)
+    }
+
     @Test
     fun testValue() {
         val converter = Converter("X")
@@ -21,7 +27,7 @@ class ConverterTest {
         val exception = assertThrows<IllegalArgumentException> {
             Converter("")
         }
-        assertEquals("Empty numeral", exception.message, "The constructor should throw an IllegalArgumentException if the numeral is empty")
+        assertEquals("Empty numeral", exception.message)
     }
 
     @Test
@@ -29,13 +35,26 @@ class ConverterTest {
         val exception = assertThrows<IllegalArgumentException> {
             Converter("XP")
         }
-        assertEquals("Non valid roman values found in the numeral", exception.message, "The constructor should throw an IllegalArgumentException if the numeral contains non valid roman values")
+        assertEquals("Non valid roman values found in the numeral", exception.message)
+    }
+
+    @Test
+    fun testToIntegerSimpleValue() {
+        testRomanConversion("IX", 9, "The toInteger method should return the integer value of the numeral")
     }
 
     @Test
     fun testToInteger() {
-        val converter = Converter("IX")
-        assertEquals(9, converter.toInteger(), "The toInteger method should return the integer value of the numeral")
+        testRomanConversion("MCMXC", 1990, "The toInteger method should return the integer value of the numeral")
+    }
+
+    @Test
+    fun testToIntegerWithRepetitions() {
+        val exception = assertThrows<IllegalArgumentException> {
+            Converter("VVVV")
+        }
+        assertEquals("Non valid roman numeral", exception.message)
+
     }
 
 }
