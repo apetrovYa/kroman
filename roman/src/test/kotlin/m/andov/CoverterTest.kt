@@ -35,7 +35,7 @@ class ConverterTest {
         val exception = assertThrows<IllegalArgumentException> {
             Converter("XP")
         }
-        assertEquals("Non valid roman values found in the numeral", exception.message)
+        assertEquals("Non valid roman numeral", exception.message)
     }
 
     @Test
@@ -54,7 +54,15 @@ class ConverterTest {
             Converter("VVVV")
         }
         assertEquals("Non valid roman numeral", exception.message)
+    }
 
+    @Test
+    fun testToIntegerValidRepetitions() {
+        testRomanConversion("MMMM", 4000, "The toInteger method should return the integer value of the numeral")
+    }
+    @Test
+    fun testToIntegerBigNumber() {
+        testRomanConversion("MMMMCMXCIX", 4999, "The toInteger method should return the integer value of the numeral")
     }
 
 }

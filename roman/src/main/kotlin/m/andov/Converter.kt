@@ -1,8 +1,28 @@
 package m.andov.kroman
 
+/**
+ * This class is used to convert Roman numerals to their corresponding integer values.
+ * The Roman numeral to be converted is passed as a string to the constructor.
+ * The class also validates the input string to ensure it is a valid Roman numeral.
+ *
+ * The class uses a nested object `RomanConstants` to map Roman numerals to their integer values.
+ *
+ * The `toInteger` method is used to convert the Roman numeral to an integer.
+ * The `originalValue` method returns the original Roman numeral string.
+ *
+ * @author apetrovYa
+ */
 class Converter(private var numeral: String) {
-
+    /**
+     * This object maps Roman numerals to their corresponding integer values.
+     */
      internal object RomanConstants {
+        /**
+         * This method returns the integer value of a Roman numeral.
+         *
+         * @param romanSymbol The Roman numeral as a string.
+         * @return The integer value of the Roman numeral. Returns 0 if the symbol is not a valid Roman numeral.
+         */
         fun valueOf(romanSymbol: String): Int {
             return when (romanSymbol) {
                 "I" -> 1
@@ -17,14 +37,29 @@ class Converter(private var numeral: String) {
         }
     }
 
-
+    /**
+     * This block initializes the Converter object.
+     *
+     * Preconditions:
+     * - The input string `numeral` must not be empty.
+     * - The input string `numeral` must be a valid Roman numeral, where no Roman numeral symbol (except 'M') repeats four times consecutively.
+     *
+     * Postconditions:
+     * - The `numeral` field is set to the reversed, uppercase version of the input string.
+     *
+     * @throws IllegalArgumentException If the input string is empty or not a valid Roman numeral.
+     */
     init {
         if (numeral.isEmpty()) throw IllegalArgumentException("Empty numeral")
-        if ("^[IVXLCDM]+$".toRegex().matches(numeral).not()) throw IllegalArgumentException("Non valid roman numeral")
+        if ("^(?!.*([IVXLCD]).*\\1\\1\\1)[IVXLCDM]+$".toRegex().matches(numeral).not()) throw IllegalArgumentException("Non valid roman numeral")
 
         numeral = numeral.toUpperCase().reversed()
     }
-
+    /**
+     * This method converts the Roman numeral to an integer.
+     *
+     * @return The integer value of the Roman numeral.
+     */
     public  fun toInteger(): Int {
         var sum = 0
         var previous = 0
@@ -43,7 +78,11 @@ class Converter(private var numeral: String) {
 
         return sum
     }
-
+    /**
+     * This method returns the original Roman numeral string.
+     *
+     * @return The original Roman numeral string.
+     */
     fun originalValue(): String {
         return this.numeral
     }
