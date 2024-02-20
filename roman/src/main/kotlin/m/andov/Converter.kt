@@ -40,11 +40,11 @@ class Converter(private var numeral: String) {
     /**
      * This block initializes the Converter object.
      *
-     * Preconditions:
+     * Pre-conditions:
      * - The input string `numeral` must not be empty.
      * - The input string `numeral` must be a valid Roman numeral, where no Roman numeral symbol (except 'M') repeats four times consecutively.
      *
-     * Postconditions:
+     * Post-conditions:
      * - The `numeral` field is set to the reversed, uppercase version of the input string.
      *
      * @throws IllegalArgumentException If the input string is empty or not a valid Roman numeral.
@@ -53,7 +53,7 @@ class Converter(private var numeral: String) {
         if (numeral.isEmpty()) throw IllegalArgumentException("Empty numeral")
         if ("^(?!.*([IVXLCD]).*\\1\\1\\1)[IVXLCDM]+$".toRegex().matches(numeral).not()) throw IllegalArgumentException("Non valid roman numeral")
 
-        numeral = numeral.toUpperCase().reversed()
+        numeral = numeral.uppercase().reversed()
     }
     /**
      * This method converts the Roman numeral to an integer.
